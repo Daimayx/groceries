@@ -1,7 +1,7 @@
 import React, {createRef, useCallback, useEffect, useState} from 'react';
 import {useLocation} from "react-router-dom";
 import {getGrocery, searchByLocation} from "../../context/Database";
-import bicycles from "../pictures/bicycles.jpg"
+import groceries from "../pictures/groceries.jpg"
 import "../css/search.css"
 import {GroceryComponent} from "./GroceryComponent";
 
@@ -96,7 +96,7 @@ export default function Store() {
                         </div>
                     </div>
                     <div className="col-sm align-content-center p-0" style={{minHeight: "70vh"}}>
-                        <img width="70%" height="80%" src={bicycles}
+                        <img width="70%" height="80%" src={groceries}
                              style={{marginTop: "5%", marginLeft: "14%", borderRadius: "100px 0 100px 0"}}/>
                     </div>
                 </div>

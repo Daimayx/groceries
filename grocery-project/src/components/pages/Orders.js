@@ -2,7 +2,7 @@ import React, {Component, useEffect, useState} from 'react';
 import {useAuth} from "../../context/AuthContext";
 import {useNavigate} from "react-router-dom";
 import {getOrders, acceptOrder, declineOrder} from "../../context/Database";
-import {BikeComponent} from "./BikeComponent";
+import {GroceryComponent} from "./GroceryComponent";
 
 export default function Orders() {
     const [orders, setOrders] = useState([])
@@ -10,18 +10,16 @@ export default function Orders() {
     useEffect(() => {
         getOrders().then(res => {
             res.data.forEach(val => {
-                const bike = {
-                    id: val.bike._id.toString(),
-                    title: val.bike.title,
-                    location: val.bike.location,
-                    desc: val.bike.description,
-                    image: val.bike.img,
-                    pricePerWeek: val.bike.pricePerWeek,
-                    pricePerDay: val.bike.pricePerDay
+                const grocery = {
+                    id: val.grocery._id.toString(),
+                    title: val.grocery.title,
+                    quantity: val.grocery.quantity,
+                    price: val.grocery.price,
+                    image: val.grocery.img
                 }
                 const order = {
                     id: val._id,
-                    bike: bike,
+                    grocery: grocery,
                     city: val.city,
                     country: val.country,
                     paymentMethod:val.paymentMethod,
@@ -58,7 +56,7 @@ export default function Orders() {
              orders.map((order) => {
                  return <div className="card m-1">
                          <div className="card-header">
-                             Bike: {order.bike.title}
+                             Grocery: {order.grocery.title}
                              <br/>
                              Ordered By: {order.user}
                          </div>

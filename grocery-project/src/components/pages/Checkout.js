@@ -50,7 +50,7 @@ export default function Checkout() {
                 "city": event.target[3].value,
                 "province": event.target[4].value,
                 "postalCode": event.target[5].value,
-                "country": "Malaysia"
+                "country": "USA"
             },
             "paymentMethod": "Visa",
             "itemsPrice": total,

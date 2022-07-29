@@ -7,34 +7,32 @@ export function searchByLocation(query) {
         method: "get",
         params: {location: query},
         withCredentials: true,
-        url: "http://localhost:4000/bikesByLocation",
+        url: "http://localhost:4000/groceriesByLocation",
     })
 }
 
 
-export function addBike(destination) {
+export function addGrocery(destination) {
     let data = new FormData();
-    data.append('img', destination.img, destination.img);
+    data.append('picture', destination.img, destination.img);
     data.append('title', destination.title)
-    data.append('location', destination.location)
-    data.append('desc', destination.bike_description)
-    data.append('pricePerDay', destination.pricePerDay)
-    data.append('pricePerWeek', destination.pricePerWeek)
+    data.append('quantity', destination.quantity)
+    data.append('price', destination.price)
 
     return axios({
         method: "post",
         withCredentials: true,
-        url: "http://localhost:4000/bike",
+        url: "http://localhost:4000/grocery",
         data: data,
     })
 }
 
-export function getBikes() {
+export function getGrocery() {
 
     return axios({
         method: "get",
         withCredentials: true,
-        url: "http://localhost:4000/bikes",
+        url: "http://localhost:4000/groceries",
     })
 
 }

@@ -2,7 +2,7 @@ import React, {Component, useEffect, useState} from 'react';
 import {useAuth} from "../../context/AuthContext";
 import {useNavigate} from "react-router-dom";
 import {getMyOrders} from "../../context/Database";
-import {BikeComponent} from "./BikeComponent";
+import {GroceryComponent} from "./GroceryComponent";
 
 
 export default function CustomersComponent() {
@@ -11,18 +11,16 @@ export default function CustomersComponent() {
     useEffect(() => {
         getMyOrders().then(res => {
             res.data.forEach(val => {
-                const bike = {
-                    id: val.bike._id.toString(),
-                    title: val.bike.title,
-                    location: val.bike.location,
-                    desc: val.bike.description,
-                    image: val.bike.img,
-                    pricePerWeek: val.bike.pricePerWeek,
-                    pricePerDay: val.bike.pricePerDay
+                const grocery = {
+                    id: val.grocery._id.toString(),
+                    title: val.grocery.title,
+                    quantity: val.grocery.quantity,
+                    price: val.grocery.price,
+                    image: val.bike.img
                 }
                 const order = {
                     id: val._id,
-                    bike: bike,
+                    grocery: grocery,
                     city: val.city,
                     country: val.country,
                     paymentMethod: val.paymentMethod,
@@ -46,7 +44,7 @@ export default function CustomersComponent() {
                     orders.map((order) => {
                         return <div className="card m-1">
                             <div className="card-header">
-                                {order.bike.title}
+                                {order.grocery.title}
                             </div>
                             <div className="card-body">
                                 <form>

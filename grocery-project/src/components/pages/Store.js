@@ -1,29 +1,27 @@
 import React, {createRef, useCallback, useEffect, useState} from 'react';
 import {useLocation} from "react-router-dom";
-import {getBikes, searchByLocation} from "../../context/Database";
+import {getGrocery, searchByLocation} from "../../context/Database";
 import bicycles from "../pictures/bicycles.jpg"
 import "../css/search.css"
-import {BikeComponent} from "./BikeComponent";
+import {GroceryComponent} from "./GroceryComponent";
 
 export default function Store() {
-    const [bikes, setBikes] = useState([])
+    const [grocery, setGrocery] = useState([])
     const location = useLocation()
     const [load, setLoading] = useState(1)
     useEffect(() => {
-        setBikes([])
-        getBikes().then(res => {
+        setGrocery([])
+        getGrocery().then(res => {
             res.data.forEach(data => {
                 console.log(data)
-                const bike = {
+                const grocery = {
                     id: data._id.toString(),
                     title: data.title,
-                    location: data.location,
-                    desc: data.description,
-                    image: data.img,
-                    pricePerWeek: data.pricePerWeek,
-                    pricePerDay: data.pricePerDay
+                    quantity: data.quantity,
+                    price: data.price,
+                    image: data.img
                 }
-                setBikes(bikes => [...bikes, bike])
+                setGrocery(groceries => [...groceries, grocery])
             })
         })
     }, [load])
@@ -33,28 +31,26 @@ export default function Store() {
         const query = event.target[0].value
         searchByLocation(query).then(res => {
             // removing previous data
-            setBikes([])
+            setGrocery([])
             console.log(res)
             res.data.forEach(data => {
                 console.log(data)
-                const bike = {
+                const grocery = {
                     id: data._id.toString(),
                     title: data.title,
-                    location: data.location,
-                    desc: data.description,
-                    image: data.img,
-                    pricePerWeek: data.pricePerWeek,
-                    pricePerDay: data.pricePerDay
+                    quantity: data.quantity,
+                    price: data.price,
+                    image: data.img
                 }
                 // adding searched result
-                setBikes(bikes => [...bikes, bike])
+                setGrocery(groceries => [...groceries, grocery])
         })
     })
     }
 
 
 
-    console.log(bikes)
+    console.log(grocery)
 
     return (
         <div>
@@ -63,7 +59,7 @@ export default function Store() {
                 <div className="row" style={{backgroundColor: "yellow"}}>
                     <div className="col-sm p-5" style={{minHeight: "70vh"}}>
                         <div style={{width: "40%", fontSize: "3rem", fontFamily: "'Gideon Roman', cursive"}}>
-                            Life is a <b style={{fontSize: "1.2em"}}>Shared</b> Ride
+                            Buy your <b style={{fontSize: "1.2em"}}>Groceries</b> here!
                         </div>
                         <div>
                             <div className="input-group ps-5">
@@ -107,8 +103,8 @@ export default function Store() {
             </div>
 
             <div className="p-2 row py-4">
-                {bikes.map((bike) => {
-                    return <BikeComponent key={bike.id} bike={bike}/>
+                {grocery.map((grocery) => {
+                    return <GroceryComponent key={grocery.id} grocery={grocery}/>
                 })}
             </div>
         </div>

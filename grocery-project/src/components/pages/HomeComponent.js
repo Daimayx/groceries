@@ -21,18 +21,15 @@ export default function HomePage() {
                 <div className="inner-container">
                     <div className="banner first-text ">
                         <p>
-                            Ride <br/>
-                            Your own Bike<br/>
-                            Where ever <br/>
-                            you Go<br/>
+                            Get <br/>
+                            Your own Groceries<br/>
+                            at doorstep <br/>
+                            wherever you live <br/>
                         </p>
                     </div>
                     <div className="banner second-text">
                         <p>
-                            Join us today to travel to
-                            your dream places in your own bike and let
-                            us help you reach your
-                            destination
+                           Buy everything at one place!
                         </p>
                     </div>
                 </div>

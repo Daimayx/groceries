@@ -1,10 +1,10 @@
 import React, {Component, useState} from 'react';
 import {useAuth} from "../../context/AuthContext";
 import {useNavigate} from "react-router-dom";
-import {addBike} from "../../context/Database";
+import {addGrocery} from "../../context/Database";
 
 
-export default function AddBike() {
+export default function AddGrocery() {
     const [image, setImage] = useState()
     const {currentUser} = useAuth()
     const imageRef = React.createRef()
@@ -20,20 +20,17 @@ export default function AddBike() {
             return;
         }
         console.log(event)
-        const bike = {
+        const grocery = {
             title: event.target[0].value,
-            location: event.target[1].value,
-            bike_description: event.target[2].value,
+            quantity: event.target[1].value,
+            price: event.target[2].value,
             img: image,
-            pricePerDay: event.target[3].value,
-            pricePerWeek: event.target[3].value * 7 * 0.75,
-            size:  event.target[4].value,
         }
 
-        addBike(bike).then(res => {
+        addGrocery(grocery).then(res => {
             navigation('/store')
         })
-        console.log(bike)
+        console.log(grocery)
     }
 
    const changeImage = (event) => {
@@ -42,7 +39,7 @@ export default function AddBike() {
 
         return (
             <div>
-                <h1 className="text-center">Add new Bike</h1>
+                <h1 className="text-center">Add new Grocery</h1>
 
                 <div className="w-50" style={{margin: "auto"}}>
                     <form onSubmit={addNewDestination}>
@@ -52,28 +49,17 @@ export default function AddBike() {
                                 <label className="visually-hidden" htmlFor="inputTitle">Title</label>
                                 <input type="text" className="form-control w-100" id="inputTitle" required placeholder="Title"/>
                             </div>
+
                             <div className="col-auto form-group">
-                                <label className="visually-hidden" htmlFor="inputLocation">Location</label>
-                                <input type="text" className="form-control" id="inputLocation"
-                                       placeholder="Location" required/>
+                                <label className="visually-hidden" htmlFor="inputQuantity">Quantity</label>
+                                <input type="number" className="form-control" id="inputQuantity"
+                                       placeholder="Quantity" required/>
                             </div>
 
                             <div className="col-auto form-group">
-                                <label className="visually-hidden" htmlFor="inputDescription">Description</label>
-                                <textarea className="form-control" id="inputDescription"
-                                       placeholder="Description" name="description" rows="3" required/>
-                            </div>
-
-
-                            <div className="col-auto form-group">
-                                <label className="visually-hidden" htmlFor="inputPrice">Location</label>
-                                <input type="number" className="form-control" name="price" id="inputPrice"
-                                       placeholder="Price" required/>
-                            </div>
-                            <div className="col-auto form-group">
-                                <label className="visually-hidden" htmlFor="inputSize">Location</label>
-                                <input type="text" className="form-control" name="location" id="inputSize"
-                                       placeholder="Size" required/>
+                                <label className="visually-hidden" htmlFor="inputPrice">Price</label>
+                                <input className="form-control" id="inputPrice"
+                                       placeholder="Price" name="price" required/>
                             </div>
 
                             <div className="col-auto form-group">
@@ -85,7 +71,7 @@ export default function AddBike() {
 
 
                             <div className="col-auto">
-                                <button type="submit" onSubmit={addNewDestination} className="btn btn-primary">Post Bike</button>
+                                <button type="submit" onSubmit={addNewDestination} className="btn btn-primary">Post Grocery</button>
                             </div>
                         </div>
 

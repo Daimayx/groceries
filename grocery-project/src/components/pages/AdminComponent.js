@@ -1,7 +1,7 @@
 import {useAuth} from "../../context/AuthContext"
 import {useNavigate} from "react-router-dom";
 import React, {useEffect, useRef, useState} from "react";
-import AddBike from "./AddBike";
+import AddGrocery from "./AddGrocery";
 
 
 
@@ -25,7 +25,7 @@ export default function AdminComponent() {
                     </button>
                 </div>
                 <div className="row">
-                    <AddBike/>
+                    <AddGrocery/>
                 </div>
             </div>
         </>

@@ -15,7 +15,7 @@ export default function NavBar() {
                     <NavLink exact="true" to="/" className="nav-logo">
                         <div className="row">
                             <div >
-                                <i className="fa-solid fa-bicycle"/> Store
+                                <i className="fa-solid fa-shopping-cart"/> Store
                             </div>
                         </div>
                     </NavLink>

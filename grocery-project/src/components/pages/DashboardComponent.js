@@ -1,7 +1,7 @@
 import {useAuth} from "../../context/AuthContext"
 import {useNavigate} from "react-router-dom";
 import React, {useEffect, useRef, useState} from "react";
-import AddBike from "./AddBike";
+import AddGrocery from "./AddGrocery";
 import AdminComponent from "./AdminComponent";
 import CustomersComponent from "./CustomerComponent";
 

@@ -19,7 +19,7 @@ export default function Store() {
                     title: data.title,
                     quantity: data.quantity,
                     price: data.price,
-                    image: data.img
+                    picture: data.picture
                 }
                 setGrocery(groceries => [...groceries, grocery])
             })

@@ -11,16 +11,9 @@ export default function CustomersComponent() {
     useEffect(() => {
         getMyOrders().then(res => {
             res.data.forEach(val => {
-                const grocery = {
-                    id: val.grocery._id.toString(),
-                    title: val.grocery.title,
-                    quantity: val.grocery.quantity,
-                    price: val.grocery.price,
-                    image: val.bike.img
-                }
                 const order = {
-                    id: val._id,
-                    grocery: grocery,
+                    id: val.id,
+                    grocery: val.groceries,
                     city: val.city,
                     country: val.country,
                     paymentMethod: val.paymentMethod,
@@ -70,13 +63,30 @@ export default function CustomersComponent() {
                                         </div>
                                     </div>
 
-
-
                                     <div className="form-group row">
                                         <label className="col-sm-2 col-form-label">Status</label>
                                         <div className="col-sm-10">
                                             <input type="text" className="form-control" id="inputEmail3"
                                                    placeholder={order.status} disabled/>
+                                        </div>
+                                    </div>
+
+
+                                    <div className="form-group row">
+                                        <label className="col-sm-2 col-form-label">Items</label>
+                                        <div className="col-sm-10">
+                                            <div className="form-control" id="inputEmail3">
+                                            <p>
+                                                {order.grocery.map(grocery => {
+                                                    return <div>
+                                                        {grocery.title}<br/>
+                                                    </div>
+                                                })}
+
+                                            </p>
+
+
+                                            </div>
                                         </div>
                                     </div>
 

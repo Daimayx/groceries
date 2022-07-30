@@ -9,24 +9,22 @@ export default function AddGrocery() {
     const {currentUser} = useAuth()
     const imageRef = React.createRef()
     const navigation = useNavigate()
-    const addNewDestination = (event) => {
+    const addNewGrocery = (event) => {
         event.preventDefault();
-
         if (image == null)
             return
         const ext = image.name.substring(image.name.lastIndexOf("."));
-        if (!(ext === ".jpg" || ext === ".jpeg" || ext === ".png" || ext === ".svg")) {
-            imageRef.current.setCustomValidity("file must be jpg, jpeg or png");
+        if (!(ext === ".jpg" || ext===".JPG" || ext === ".jpeg" || ext === ".png" || ext === ".svg")) {
+            alert("file must be jpg, jpeg or png")
             return;
         }
-        console.log(event)
         const grocery = {
             title: event.target[0].value,
             quantity: event.target[1].value,
             price: event.target[2].value,
             img: image,
         }
-
+        console.log(grocery)
         addGrocery(grocery).then(res => {
             navigation('/store')
         })
@@ -42,7 +40,7 @@ export default function AddGrocery() {
                 <h1 className="text-center">Add new Grocery</h1>
 
                 <div className="w-50" style={{margin: "auto"}}>
-                    <form onSubmit={addNewDestination}>
+                    <form onSubmit={addNewGrocery}>
 
                         <div className="align-items-center g-3">
                             <div className="col-auto form-group">
@@ -71,7 +69,7 @@ export default function AddGrocery() {
 
 
                             <div className="col-auto">
-                                <button type="submit" onSubmit={addNewDestination} className="btn btn-primary">Post Grocery</button>
+                                <button type="submit" onSubmit={addNewGrocery} className="btn btn-primary">Post Grocery</button>
                             </div>
                         </div>
 

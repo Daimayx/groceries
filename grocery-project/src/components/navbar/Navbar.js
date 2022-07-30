@@ -73,7 +73,15 @@ export default function NavBar() {
                                 About
                             </NavLink>
                         </li>
-
+                        <li className="nav-item">
+                            <NavLink
+                                exact="true"
+                                to="/checkout"
+                                className={(navData) => (navData.isActive ? "active nav-links" : 'nav-links')}
+                                onClick={handleClick} >
+                                <i className="fa-solid fa-shopping-cart"/>
+                            </NavLink>
+                        </li>
                     </ul>
                     <div className="nav-icon" onClick={handleClick}>
                         <i className={click ? "fas fa-times" : "fas fa-bars"}></i>

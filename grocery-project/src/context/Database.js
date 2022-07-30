@@ -14,11 +14,10 @@ export function searchByLocation(query) {
 
 export function addGrocery(destination) {
     let data = new FormData();
-    data.append('picture', destination.img, destination.img);
+    data.append('img', destination.img, destination.img);
     data.append('title', destination.title)
     data.append('quantity', destination.quantity)
     data.append('price', destination.price)
-
     return axios({
         method: "post",
         withCredentials: true,
@@ -27,8 +26,26 @@ export function addGrocery(destination) {
     })
 }
 
-export function getGrocery() {
+export function addToCart(grocery) {
+    return axios({
+        method: "post",
+        withCredentials: true,
+        url: "http://localhost:4000/addToCart",
+        data: {grocery: grocery}
+    })
+}
 
+export function getCart(){
+    return axios({
+        method: "get",
+        withCredentials: true,
+        url: "http://localhost:4000/cart"
+    })
+}
+
+
+
+export function getGrocery() {
     return axios({
         method: "get",
         withCredentials: true,
@@ -46,7 +63,7 @@ export function makePayment(data) {
     })
 }
 
-export function getOrders(){
+export function getOrders() {
     return axios({
         method: "get",
         withCredentials: true,
@@ -54,7 +71,7 @@ export function getOrders(){
     })
 }
 
-export function getMyOrders(){
+export function getMyOrders() {
     return axios({
         method: "get",
         withCredentials: true,

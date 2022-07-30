@@ -10,11 +10,13 @@ const bodyParser = require("body-parser");
 const app = express();
 const User = require("./user");
 const Grocery = require("./grocery");
+const Cart = require("./cart");
 const Order = require("./order");
 const router = express.Router();
 var ObjectId = require("mongoose").Types.ObjectId;
 const multer = require("multer");
 const fs = require("fs");
+const cart = require("./cart");
 
 // connecting to mongodb
 mongoose.connect(
@@ -35,7 +37,7 @@ const storage = multer.diskStorage({
     cb(null, "static/groceries");
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + file.originalname.split(".").pop());
+    cb(null, file.fieldname + Date.now() + ".jpg");
   },
 });
 
@@ -61,8 +63,6 @@ app.use(cookieParser("secretcode"));
 app.use(passport.initialize());
 app.use(passport.session());
 require("./passportConfig")(passport);
-
-
 
 app.post("/register", (req, res) => {
   console.log("new user");
@@ -101,13 +101,10 @@ app.post("/login", (req, res, next) => {
   })(req, res, next);
 });
 
-
 app.post("/logout", (req, res) => {
   req.logout();
   res.send("logged out");
 });
-
-
 
 app.get("/user", (req, res) => {
   if (req.user)
@@ -117,8 +114,6 @@ app.get("/user", (req, res) => {
   else res.send({});
 });
 
-
-
 // uploading a new grocery
 app.post("/grocery", upload.single("img"), (req, res) => {
   if (req.user == null) {
@@ -126,7 +121,8 @@ app.post("/grocery", upload.single("img"), (req, res) => {
     res.send("Login first");
     return;
   }
-  
+  console.log(req);
+
   const grocery = new Grocery({
     _id: new mongoose.Types.ObjectId(),
     title: req.body.title,
@@ -135,20 +131,52 @@ app.post("/grocery", upload.single("img"), (req, res) => {
     picture: "http://localhost:4000/grocery_pic/" + req.file.filename,
   });
 
- 
   grocery.save().then(() => {
-    res.status = 200
+    res.status = 200;
     res.send("Success");
   });
 });
 
-
-app.get("/grocery_pic/:file", (req, res) => {
-  const path = "static/groceries" + req.params.file;
-  res.download(path);
+app.use("/", (req, res, next) => {
+  console.log(req.body);
+  next();
 });
 
+app.post("/addtocart", (req, res) => {
+  Cart.findOne({ username: req.user.username }).then((data) => {
+    let cart = data;
+    if (!data) {
+      cart = new Cart({
+        username: req.user.username,
+        cart: [],
+      });
+    }
+    cart.cart.push(req.body.grocery.id);
+    cart.save().then((data) => {
+      res.send("success");
+    });
+  });
+});
 
+app.get("/cart", (req, res) => {
+  if(req.user){
+    Cart.findOne({ username: req.user.username }).populate('cart')
+    .exec((err, data) => {
+      if(!err){
+        res.send(data.cart);
+      }else{
+        res.send([])
+      }
+    });
+  }else{
+    res.send([])
+  }
+});
+
+app.get("/grocery_pic/:file", (req, res) => {
+  const path = "static/groceries/" + req.params.file;
+  res.download(path);
+});
 
 app.post("/confirm", (req, res) => {
   const order = new Order({
@@ -175,7 +203,6 @@ app.get("/groceries", (req, res) => {
   });
 });
 
-
 // TODO
 // returns a list of all the bikes
 app.get("/groceriesByLocation", (req, res) => {
@@ -190,13 +217,13 @@ app.get("/groceriesByLocation", (req, res) => {
 });
 
 app.get("/orders", (req, res) => {
-  Order.find({}, function (err, orders) {
+  Order.find({}).populate("groceries").exec( function (err, orders) {
     res.send(orders);
   });
 });
 
 app.get("/myorders", (req, res) => {
-  Order.find({ username: req.user.username }, function (err, orders) {
+  Order.find({ user: req.user.username }).populate("groceries").exec(function (err, orders) {
     res.send(orders);
   });
 });

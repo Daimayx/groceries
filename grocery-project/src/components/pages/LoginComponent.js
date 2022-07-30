@@ -60,7 +60,7 @@ function LoginComponent() {
                                         <i className="fa fa-lock"></i>
                                         </span>
                                     </div>
-                                    <input type="text" style={{margin:"0px"}} className="form-control" name="password" placeholder="Password"
+                                    <input type="password" style={{margin:"0px"}} className="form-control" name="password" placeholder="Password"
                                            required="required"/>
                                 </div>
                             </div>

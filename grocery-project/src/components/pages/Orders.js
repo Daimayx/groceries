@@ -10,16 +10,9 @@ export default function Orders() {
     useEffect(() => {
         getOrders().then(res => {
             res.data.forEach(val => {
-                const grocery = {
-                    id: val.grocery._id.toString(),
-                    title: val.grocery.title,
-                    quantity: val.grocery.quantity,
-                    price: val.grocery.price,
-                    image: val.grocery.img
-                }
                 const order = {
                     id: val._id,
-                    grocery: grocery,
+                    grocery: val.groceries,
                     city: val.city,
                     country: val.country,
                     paymentMethod:val.paymentMethod,
@@ -39,12 +32,15 @@ export default function Orders() {
     function acceptBtnClicked(order) {
         acceptOrder(order.id).then(res => {
             console.log(res)
+            alert("Order accepted")
+            window.location.reload(false);
         })
     }
 
     function declineBtnClicked(order) {
         declineOrder(order.id).then(res => {
-            console.log(res)
+            alert("Order declined")
+            window.location.reload(false);
         })
     }
 
@@ -90,6 +86,22 @@ export default function Orders() {
                                                 placeholder={order.country} disabled/>
                                      </div>
                                  </div>
+
+                                 <div className="form-group row">
+                                     <label className="col-sm-2 col-form-label">Items</label>
+                                     <div className="col-sm-10">
+                                         <div className="form-control" id="inputEmail3">
+                                             <p>
+                                                 {order.grocery.map(grocery => {
+                                                     return <div>
+                                                         {grocery.title}<br/>
+                                                     </div>
+                                                 })}
+                                             </p>
+                                         </div>
+                                     </div>
+                                 </div>
+
                                  {order.status==="pending"? <div className="m-auto w-50">
                                      <button className="btn btn-primary btn-success w-25 m-1" onClick={()=> acceptBtnClicked(order)}>ACCEPT</button>
                                      <button className="btn btn-primary btn-danger w-25 m-1" onClick={() => declineBtnClicked(order)}>DECLINE</button>

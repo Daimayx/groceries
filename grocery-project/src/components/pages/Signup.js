@@ -75,7 +75,7 @@ const Signup = () => {
                                         <i className="fa fa-lock"></i>
                                         </span>
                                     </div>
-                                    <input type="text" style={{margin: "0px"}} className="form-control" name="password"
+                                    <input type="password" style={{margin: "0px"}} className="form-control" name="password"
                                            placeholder="Password"
                                            required="required"/>
                                 </div>
